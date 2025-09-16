@@ -10,10 +10,10 @@ import SwiftData
 
 enum Avatar: String, CaseIterable, Identifiable, Codable {
     var id: String { self.rawValue }
-    case avatar1
-    case avatar2
-    case avatar3
-    case avatar4
+    case avatar1 = "Avatars/avatar1"
+    case avatar2 = "Avatars/avatar2"
+    case avatar3 = "Avatars/avatar3"
+    case avatar4 = "Avatars/avatar4"
 }
 
 @Model
