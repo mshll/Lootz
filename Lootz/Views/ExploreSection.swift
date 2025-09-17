@@ -20,11 +20,12 @@ struct ExploreSection: View {
         giveaways.chunked(into: 3)
     }
     
-        var body: some View {
+    var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             
             NavigationLink(destination:
-                            GiveawayListView(giveaways: viewModel.giveaways, selectedPlatform: platform, showFilters: false).navigationTitle(platform.description)
+                            GiveawayListView(giveaways: viewModel.giveaways, selectedPlatform: platform, showFilters: false)
+                .navigationTitle("\(platform.description) Giveaways")
             ) {
                 HStack {
                     Text("\(platform.description) Giveaways")
@@ -49,7 +50,7 @@ struct ExploreSection: View {
                 .scrollTargetLayout()
             }
             .scrollTargetBehavior(.viewAligned)
-        
+            
         }
         .safeAreaPadding(.horizontal)
         .padding(.bottom)

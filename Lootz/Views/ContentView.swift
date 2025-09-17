@@ -14,9 +14,11 @@ enum Tabs: Int {
 
 
 struct ContentView: View {
+    @Environment(\.openURL) var openURL
     @State var activeTab: Tabs = .home
     @State private var searchText: String = ""
     @StateObject private var viewModel = GiveawaysViewModel()
+    @State private var giveawayUrl: String? = nil
     
     @Query var userQuery: [User]
     private var user: User? {
@@ -30,22 +32,29 @@ struct ContentView: View {
                     NavigationStack {
                         HomeView()
                     }
+                    .onPreferenceChange(GiveawayUrlPreferenceKey.self) { giveawayUrl = $0 }
                 }
                 
                 Tab("Explore", systemImage: "circle.grid.cross.fill", value: Tabs.explore) {
                     NavigationStack {
                         ExploreView()
                     }
+                    .onPreferenceChange(GiveawayUrlPreferenceKey.self) { giveawayUrl = $0 }
                 }
-                
                 
                 Tab(value: Tabs.search, role: .search) {
                     NavigationStack {
                         SearchView(query: searchText)
                     }
+                    .onPreferenceChange(GiveawayUrlPreferenceKey.self) { giveawayUrl = $0 }
                     .searchable(text: $searchText, placement: .toolbar, prompt: "Search games by name")
                 }
                 
+            }
+            .tabViewBottomAccessory {
+                if let giveawayUrl, let url = URL(string: giveawayUrl) {
+                    OpenLinkButton(url: url, label: "Claim Giveaway")
+                }
             }
             .tabBarMinimizeBehavior(.onScrollDown)
             .searchToolbarBehavior(.minimize)
@@ -55,6 +64,7 @@ struct ContentView: View {
                     viewModel.loadGiveawaysAsync()
                 }
             }
+
         } else {
             LoginView()
         }
@@ -64,4 +74,5 @@ struct ContentView: View {
 
 #Preview(traits: .userMockData) {
     ContentView()
+//        .environment(GlobalData.shared)
 }
