@@ -22,7 +22,7 @@ public struct FilterButton<T>: View where T: CustomStringConvertible & Equatable
             Text(type.description)
                 .font(.caption)
                 .bold()
-                .foregroundColor(isSelected ? Color(.secondary) : Color(.systemGray))
+                .foregroundColor(isSelected ? Color(.inverse) : Color(.systemGray))
                 .padding(.vertical, 10)
                 .padding(.horizontal, 20)
                 .background(isSelected ? Color.primary : Color(.systemGray6), ignoresSafeAreaEdges: .horizontal)

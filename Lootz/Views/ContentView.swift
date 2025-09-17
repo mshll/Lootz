@@ -26,7 +26,7 @@ struct ContentView: View {
     var body: some View {
         if user != nil {
             TabView(selection: $activeTab) {
-                Tab("Home", systemImage: "gamecontroller.fill", value: Tabs.home) {
+                Tab("Giveaways", systemImage: "gamecontroller.fill", value: Tabs.home) {
                     NavigationStack {
                         HomeView()
                     }
@@ -43,12 +43,11 @@ struct ContentView: View {
                     NavigationStack {
                         SearchView(query: searchText)
                     }
-                    
+                    .searchable(text: $searchText, placement: .toolbar, prompt: "Search games by name")
                 }
                 
             }
             .tabBarMinimizeBehavior(.onScrollDown)
-            .searchable(text: $searchText, placement: .toolbar, prompt: "Search games by name")
             .searchToolbarBehavior(.minimize)
             .environmentObject(viewModel)
             .onAppear {

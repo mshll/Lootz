@@ -2,7 +2,7 @@
 //  GiveawayCardView.swift
 //  Lootz
 //
-//  Created by meshal on 9/16/25.
+//  Created by meshal on 9/17/25.
 //
 
 import SwiftUI
@@ -13,28 +13,75 @@ struct GiveawayCardView: View {
     
     var body: some View {
         NavigationLink(destination: GiveawayDetailView(giveaway: giveaway)) {
-            HStack(spacing: 12) {
-                AsyncImage(url: URL(string: giveaway.thumbnail)) { image in
-                    image.resizable()
-                } placeholder: {
-                    Color.gray.opacity(0.2)
+            ZStack(alignment: .bottomLeading) {
+                GeometryReader { geometry in
+                    AsyncImage(url: URL(string: giveaway.thumbnail)) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .clipped()
+                    } placeholder: {
+                        Color.gray.opacity(0.2)
+                    }
+                    //                    .frame(maxWidth: geometry.size.width)
+                    .frame(maxHeight: .infinity)
                 }
-                .frame(width: 60, height: 60)
-                .cornerRadius(8)
+                
+                LinearGradient(
+                    gradient: Gradient(colors: [.accentColor, Color.clear]),
+                    startPoint: .bottom, endPoint: .top
+                )
+                .frame(height: 150)
+                .frame(maxWidth: .infinity, alignment: .bottom)
+                
+                Rectangle()
+                    .fill(.regularMaterial)
+                    .mask {
+                        LinearGradient(colors: [.black, .clear], startPoint: .bottom, endPoint: .top)
+                    }
+                    .frame(height: 150)
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(giveaway.title)
-                        .font(.headline)
-                    Text(giveaway.platforms)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    
+                    HStack {
+                        Text(giveaway.type)
+                            .font(.caption2)
+                            .fontWeight(.semibold)
+                            .padding(10)
+                            .glassEffect()
+                        
+                        Spacer()
+                        
+                        Button("Favorite", systemImage: "heart", action: {})
+                            .labelStyle(.iconOnly)
+                            .padding(10)
+                            .glassEffect(.regular.interactive())
+                            .clipShape(Circle())
+                            .buttonStyle(BorderlessButtonStyle())
+                    }
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(giveaway.title)
+                            .font(.title3.bold())
+                            .foregroundColor(.white)
+                            .shadow(radius: 2)
+                        Text(giveaway.platforms)
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.85))
+                    }
+                    .padding(.trailing)
                 }
+                .padding()
             }
-            .padding(.vertical, 4)
+            .frame(height: 250)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         }
+        .navigationLinkIndicatorVisibility(.hidden)
     }
 }
 
 #Preview(traits: .userMockData) {
-    HomeView()
+    ContentView()
 }

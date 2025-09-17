@@ -21,7 +21,7 @@ struct HomeView: View {
     
     
     var body: some View {
-        GiveawayListView(giveaways: viewModel.giveaways)
+        GiveawayListView(giveaways: viewModel.giveaways, viewType: .card)
             .navigationTitle("Giveaways")
             .refreshable {
                 viewModel.loadGiveawaysAsync()

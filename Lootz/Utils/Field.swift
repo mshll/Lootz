@@ -6,5 +6,5 @@
 //
 
 enum Field {
-    case secure, plain
+    case secure, plain, user
 }
