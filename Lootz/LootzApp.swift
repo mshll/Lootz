@@ -12,7 +12,7 @@ import SwiftData
 struct LootzApp: App {
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            ContentView()
         }
         .modelContainer(for: User.self)
     }

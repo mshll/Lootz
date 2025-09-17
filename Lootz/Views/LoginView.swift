@@ -10,6 +10,7 @@ import SwiftUI
 import SwiftData
 
 struct LoginView: View {
+    @Environment(\.modelContext) private var modelContext
     @State var username: String = ""
     @State var password: String = ""
     @State var avatar: Avatar = .avatar1
@@ -27,30 +28,17 @@ struct LoginView: View {
     var body: some View {
         VStack {
             
-            Text("Lootz")
-                .font(.title)
-                .fontWeight(.black)
-                .fontDesign(.serif)
-                .italic()
-                .padding()
+            LogoView()
             
             Spacer()
             
             Button {
                 showAvatarPickerSheet = true
             } label: {
-                Image(avatar.rawValue)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 250, height: 250)
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle()
-                            .stroke(Color(.systemGray6), lineWidth: 6)
-                    )
+                AvatarView(avatar: avatar)
                     .overlay(alignment: .bottomTrailing) {
                         Image(systemName: "pencil")
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Color(.secondary))
                             .padding(10)
                             .background(Color.accent)
                             .clipShape(Circle())
@@ -112,31 +100,34 @@ struct LoginView: View {
             Spacer()
             
             Button(action: login) {
-                ZStack {
-                    if isLoading {
-                        ProgressView().tint(.white)
-                    } else {
-                        Text("Login")
-                    }
+                if isLoading {
+                    ProgressView().tint(Color(.secondary))
+                        .frame(maxWidth: .infinity)
+                        .padding(10)
+                    
+                } else {
+                    Text("Login")
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .padding(10)
                 }
-                .font(.headline)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.accentColor)
-                .cornerRadius(.infinity)
-                .padding(.horizontal)
-                .padding(.bottom)
             }
-            
+            .foregroundStyle(Color(.secondary))
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
+            .padding(.horizontal)
+
         }
+        .padding(.horizontal, 10)
         .sheet(isPresented: $showAvatarPickerSheet) {
             AvatarPickerSheet(selectedAvatar: $avatar)
         }
     }
     
     private func login() {
-        //TODO
+        if username.isEmpty || password.isEmpty { return }
+        
+        modelContext.insert(User(username: username, avatar: avatar))
     }
 }
 
