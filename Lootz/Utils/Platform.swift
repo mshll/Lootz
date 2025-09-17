@@ -23,3 +23,14 @@ enum Platform: String, CaseIterable, Identifiable, CustomStringConvertible {
         }
     }
 }
+
+
+func filterGiveaways(_ giveaways: [Giveaway], byPlatform platform: Platform) -> [Giveaway] {
+    if platform == .all {
+        return giveaways
+    } else {
+        return giveaways.filter {
+            $0.platforms.localizedCaseInsensitiveContains(platform.rawValue)
+        }
+    }
+}

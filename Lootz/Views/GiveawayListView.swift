@@ -15,14 +15,10 @@ struct GiveawayListView: View {
     var viewType: GiveawayViewType = .cell
     
     private var filteredGiveaways: [Giveaway] {
-        if selectedPlatform == .all {
-            return giveaways
-        } else {
-            return giveaways.filter {
-                $0.platforms.localizedCaseInsensitiveContains(selectedPlatform.rawValue)
-            }
-        }
+        filterGiveaways(giveaways, byPlatform: selectedPlatform)
     }
+    
+    var showFilters: Bool = true
     
     var body: some View {
         ZStack {
@@ -48,6 +44,7 @@ struct GiveawayListView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 List {
+                    if showFilters {
                     Section(
                         header: ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
@@ -60,6 +57,7 @@ struct GiveawayListView: View {
                     ) {}
                         .listRowInsets(EdgeInsets())
                         .safeAreaPadding(.horizontal)
+                    }
                     
                     Section {
                         ForEach(filteredGiveaways) { giveaway in
@@ -85,3 +83,4 @@ struct GiveawayListView: View {
 #Preview(traits: .userMockData) {
     ContentView()
 }
+

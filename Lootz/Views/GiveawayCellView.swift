@@ -25,12 +25,18 @@ struct GiveawayCellView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(giveaway.title)
                         .font(.headline)
+                        .multilineTextAlignment(.leading)
                     Text(giveaway.platforms)
                         .font(.caption)
                         .foregroundColor(.secondary)
+                        .multilineTextAlignment(.leading)
+
                 }
+                
+                Spacer()
             }
             .padding(.vertical, 4)
+            .frame(maxWidth: .infinity)
         }
     }
 }

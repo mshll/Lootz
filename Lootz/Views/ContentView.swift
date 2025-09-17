@@ -19,9 +19,9 @@ struct ContentView: View {
     @StateObject private var viewModel = GiveawaysViewModel()
     
     @Query var userQuery: [User]
-        private var user: User? {
-            userQuery.first
-        }
+    private var user: User? {
+        userQuery.first
+    }
     
     var body: some View {
         if user != nil {
@@ -34,7 +34,7 @@ struct ContentView: View {
                 
                 Tab("Explore", systemImage: "circle.grid.cross.fill", value: Tabs.explore) {
                     NavigationStack {
-                        HomeView()
+                        ExploreView()
                     }
                 }
                 

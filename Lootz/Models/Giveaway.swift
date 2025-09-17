@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Giveaway: Codable, Identifiable {
+struct Giveaway: Codable, Identifiable, Hashable {
     let id: Int
     let title: String
     let worth: String?
