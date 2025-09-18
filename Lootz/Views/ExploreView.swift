@@ -15,15 +15,34 @@ struct ExploreView: View {
         userQuery.first
     }
     
-    let platforms = Platform.allCases.filter { $0 != .all }
+    private let platforms = Platform.allCases.filter { $0 != .all }
+    private var featuredGiveaways: [Giveaway] {
+        Array(viewModel.giveaways.suffix(3))
+    }
     
     var body: some View {
         ScrollView(.vertical) {
-//            VStack {
-            ForEach(platforms) { platform in
-                ExploreSection(platform: platform)
+            VStack {
+                
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack {
+                        ForEach(featuredGiveaways) { giveaway in
+                            GiveawayCardView(giveaway: giveaway, showLikeButton: false)
+                                .frame(width: 350)
+                        }
+                    }
+                    .scrollTargetLayout()
+                }
+                .scrollTargetBehavior(.viewAligned)
+                .safeAreaPadding(.horizontal)
+                .padding(.vertical)
+                
+                
+                ForEach(platforms) { platform in
+                    ExploreSection(platform: platform)
+                }
             }
-//            }
         }
         .navigationTitle("Explore")
         .toolbar {

@@ -20,6 +20,8 @@ struct GiveawayCardView: View {
         relativeTimeLeft(from: giveaway.endDate)
     }
     
+    var showLikeButton: Bool = true
+    
     var body: some View {
         NavigationLink(destination: GiveawayDetailView(giveaway: giveaway)) {
             ZStack(alignment: .bottomLeading) {
@@ -32,7 +34,6 @@ struct GiveawayCardView: View {
                     } placeholder: {
                         Color.gray.opacity(0.2)
                     }
-                    //                    .frame(maxWidth: geometry.size.width)
                     .frame(maxHeight: .infinity)
                 }
                 
@@ -69,16 +70,19 @@ struct GiveawayCardView: View {
                         
                         Spacer()
                         
-                        Button("Favorite", systemImage: isFav ? "heart.fill" : "heart", action: {
-                            toggleFavorite(giveaway, ctx)
-                        })
-                        .labelStyle(.iconOnly)
-                        .padding(10)
-                        .glassEffect(.regular.interactive())
-                        .foregroundStyle(isFav ? .red : .primary)
-                        .clipShape(Circle())
-                        .contentShape(Rectangle())
-                        .buttonStyle(.plain)
+                        if showLikeButton {
+                            Button("Favorite", systemImage: isFav ? "heart.fill" : "heart", action: {
+                                toggleFavorite(giveaway, ctx)
+                            })
+                            .labelStyle(.iconOnly)
+                            .padding(10)
+                            .glassEffect(.regular.interactive())
+                            .foregroundStyle(isFav ? .red : .primary)
+                            .clipShape(Circle())
+                            .contentShape(Rectangle())
+                            .buttonStyle(.plain)
+                            
+                        }
                     }
                     
                     Spacer()
@@ -88,9 +92,11 @@ struct GiveawayCardView: View {
                             .font(.title3.bold())
                             .foregroundColor(.white)
                             .shadow(radius: 2)
+                            .multilineTextAlignment(.leading)
                         Text(giveaway.platforms)
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.85))
+                            .multilineTextAlignment(.leading)
                     }
                     .padding(10)
                     .padding(.trailing)
