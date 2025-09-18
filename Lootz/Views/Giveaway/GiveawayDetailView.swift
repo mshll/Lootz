@@ -11,6 +11,11 @@ struct GiveawayDetailView: View {
     let giveaway: Giveaway
     @State private var giveawayUrl: String?
     @State private var headerHeight: CGFloat = 200
+    @Environment(\.modelContext) private var ctx
+    
+    private var isFav: Bool {
+        isFavorited(giveaway, ctx)
+    }
     
     private var endDate: String {
         relativeTimeLeft(from: giveaway.endDate)
@@ -43,7 +48,7 @@ struct GiveawayDetailView: View {
                                         .font(.caption)
                                         .padding(10)
                                         .fontWeight(.bold)
-                                        .glassEffect()
+                                        .glassEffect(.regular.tint(getDateTint(endDate)))
                                     Spacer()
                                 }
                             }
@@ -73,19 +78,19 @@ struct GiveawayDetailView: View {
                     
                     Section("Instructions", giveaway.instructions)
                     
-//                    if let url = URL(string: giveaway.openGiveawayUrl) {
-//                        Link(destination: url) {
-//                            Text("Open Giveaway")
-//                                .bold()
-//                                .frame(maxWidth: .infinity)
-//                                .padding(10)
-//                        }
-//                        .foregroundStyle(Color(.inverse))
-//                        .buttonStyle(.borderedProminent)
-//                        .buttonBorderShape(.capsule)
-//                        .padding(.vertical, 40)
-//                        
-//                    }
+                    //                    if let url = URL(string: giveaway.openGiveawayUrl) {
+                    //                        Link(destination: url) {
+                    //                            Text("Open Giveaway")
+                    //                                .bold()
+                    //                                .frame(maxWidth: .infinity)
+                    //                                .padding(10)
+                    //                        }
+                    //                        .foregroundStyle(Color(.inverse))
+                    //                        .buttonStyle(.borderedProminent)
+                    //                        .buttonBorderShape(.capsule)
+                    //                        .padding(.vertical, 40)
+                    //
+                    //                    }
                 }
                 .safeAreaPadding(.horizontal)
                 .padding(.bottom)
@@ -94,8 +99,11 @@ struct GiveawayDetailView: View {
         .ignoresSafeArea(edges: .top)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Favorite", systemImage: "heart", action: {/*TODO*/})
-                    .labelStyle(.iconOnly)
+                Button("Favorite", systemImage: isFav ? "heart.fill" : "heart", action: {
+                    toggleFavorite(giveaway, ctx)
+                })
+                .tint(isFav ? .red : nil)
+                .labelStyle(.iconOnly)
             }
         }
         .tabBarMinimizeBehavior(.onScrollDown)

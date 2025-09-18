@@ -45,27 +45,35 @@ struct GiveawayListView: View {
             } else {
                 List {
                     if showFilters {
-                    Section(
-                        header: ScrollView(.horizontal, showsIndicators: false) {
-                            HStack {
-                                ForEach(Platform.allCases) { platform in
-                                    FilterButton(filterType: $selectedPlatform, type: platform)
+                        Section(
+                            header: ScrollView(.horizontal, showsIndicators: false) {
+                                HStack {
+                                    ForEach(Platform.allCases) { platform in
+                                        FilterButton(filterType: $selectedPlatform, type: platform)
+                                    }
                                 }
+                                .padding(.vertical, 8)
                             }
-                            .padding(.vertical, 8)
-                        }
-                    ) {}
-                        .listRowInsets(EdgeInsets())
-                        .safeAreaPadding(.horizontal)
+                        ) {}
+                            .listRowInsets(EdgeInsets())
+                            .safeAreaPadding(.horizontal)
                     }
                     
                     Section {
-                        ForEach(filteredGiveaways) { giveaway in
-                            if viewType == .cell {
-                                GiveawayCellView(giveaway: giveaway)
-                            } else {
-                                GiveawayCardView(giveaway: giveaway)
+                        if !filteredGiveaways.isEmpty {
+                            ForEach(filteredGiveaways) { giveaway in
+                                if viewType == .cell {
+                                    GiveawayCellView(giveaway: giveaway)
+                                } else {
+                                    GiveawayCardView(giveaway: giveaway)
+                                }
                             }
+                        } else {
+                            EmptyStateView(
+                                icon: "gamecontroller",
+                                title: "No giveaways found",
+                                message: "Try changing the filters or search term"
+                            )
                         }
                     }
                     .listRowInsets(.init(top: 8, leading: 16, bottom: 8, trailing: 16))

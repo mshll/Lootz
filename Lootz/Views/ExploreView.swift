@@ -32,7 +32,7 @@ struct ExploreView: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink(destination: ProfileView()) {
-                    AvatarView(avatar: user?.avatar, size: 40, strokeWidth: 4)
+                    AvatarView(avatar: user?.avatar, size: 40, strokeWidth: 2)
                 }
             }
             .sharedBackgroundVisibility(.hidden)

@@ -33,25 +33,24 @@ struct LoginView: View {
                 
                 Spacer()
                 
-                Button {
-                    showAvatarPickerSheet = true
-                } label: {
-                    AvatarView(avatar: avatar)
-                        .overlay(alignment: .bottomTrailing) {
-                            Image(systemName: "pencil")
-                                .foregroundStyle(Color(.inverse))
-                                .padding(10)
-                                .background(Color.accent)
-                                .clipShape(Circle())
-                                .padding()
-                        }
-                }
-                .padding(.bottom, 40)
+                AvatarView(avatar: avatar)
+                    .overlay(alignment: .bottomTrailing) {
+                        Button("Change Avatar", systemImage: "pencil", action: {
+                            showAvatarPickerSheet = true
+                        })
+                        .font(.title3.bold())
+                        .labelStyle(.iconOnly)
+                        .padding()
+                        .glassEffect(.regular.interactive())
+                        .padding()
+                        .contentShape(Rectangle())
+                    }
+                    .padding(.bottom, 40)
                 
                 VStack(alignment: .leading) {
                     Text("Username")
                         .font(Font.headline)
-                    TextField("example", text: $username)
+                    TextField("e.g. lootz", text: $username)
                         .textFieldStyle(.plain)
                         .autocapitalization(.none)
                         .padding(10)

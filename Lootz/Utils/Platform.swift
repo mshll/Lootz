@@ -8,7 +8,7 @@
 import Foundation
 
 enum Platform: String, CaseIterable, Identifiable, CustomStringConvertible {
-    case all, pc, steam, ios, android
+    case all, steam, playstation, xbox, ios, android, pc
     
     var id: String { rawValue }
     

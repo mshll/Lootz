@@ -32,3 +32,14 @@ func relativeTimeLeft(from dateString: String?) -> String {
         return relativeFormatter.localizedString(for: date, relativeTo: Date())
     }
 }
+
+func getDateTint(_ date: String) -> Color? {
+    switch date.lowercased() {
+    case "yesterday", "today":
+        return Color.red
+    case "tomorrow":
+        return Color.orange
+    default:
+        return nil
+    }
+}

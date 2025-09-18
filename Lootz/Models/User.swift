@@ -13,7 +13,7 @@ enum Avatar: String, CaseIterable, Identifiable, Codable {
     case avatar1 = "Avatars/avatar1"
     case avatar2 = "Avatars/avatar2"
     case avatar3 = "Avatars/avatar3"
-    case avatar4 = "Avatars/avatar4"
+    case avatar5 = "Avatars/avatar5"
 }
 
 @Model
@@ -22,6 +22,7 @@ class User: Identifiable {
     var username: String
     var avatar: Avatar
     var isLoggedin: Bool
+    var favoriteItems: [Giveaway] = []
     
     init(id: UUID = UUID(), username: String, avatar: Avatar) {
         self.id = id

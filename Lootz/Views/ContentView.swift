@@ -45,9 +45,9 @@ struct ContentView: View {
                 Tab(value: Tabs.search, role: .search) {
                     NavigationStack {
                         SearchView(query: searchText)
+                            .searchable(text: $searchText, placement: .toolbar, prompt: "Search games by name")
                     }
                     .onPreferenceChange(GiveawayUrlPreferenceKey.self) { giveawayUrl = $0 }
-                    .searchable(text: $searchText, placement: .toolbar, prompt: "Search games by name")
                 }
                 
             }
