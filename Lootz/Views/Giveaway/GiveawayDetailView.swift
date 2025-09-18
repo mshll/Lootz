@@ -78,19 +78,6 @@ struct GiveawayDetailView: View {
                     
                     Section("Instructions", giveaway.instructions)
                     
-                    //                    if let url = URL(string: giveaway.openGiveawayUrl) {
-                    //                        Link(destination: url) {
-                    //                            Text("Open Giveaway")
-                    //                                .bold()
-                    //                                .frame(maxWidth: .infinity)
-                    //                                .padding(10)
-                    //                        }
-                    //                        .foregroundStyle(Color(.inverse))
-                    //                        .buttonStyle(.borderedProminent)
-                    //                        .buttonBorderShape(.capsule)
-                    //                        .padding(.vertical, 40)
-                    //
-                    //                    }
                 }
                 .safeAreaPadding(.horizontal)
                 .padding(.bottom)

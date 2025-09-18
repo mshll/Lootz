@@ -74,5 +74,4 @@ struct ContentView: View {
 
 #Preview(traits: .userMockData) {
     ContentView()
-//        .environment(GlobalData.shared)
 }
